@@ -124,8 +124,8 @@ function Signup({ }: Props) {
   }, [nameMessage, emailMessage, passwordMessage])
 
   return (
-    <div className="min-h-[100vh] flex justify-center bg-white border-4">
-      <div className="w-full h-full max-w-[450px] p-4 xl:p-6 mt-[150px] border rounded">
+    <div className="min-h-[calc(100vh-60px)] flex justify-center bg-white">
+      <div className="w-full h-full max-w-[450px] p-4 xl:p-6 mt-[70px] border rounded-lg">
         <div className="mb-5">
           <h1 className="text-3xl font-semibold mb-1" > Create an Account </h1>
         </div>
