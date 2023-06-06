@@ -60,8 +60,8 @@ function App({ }: Props) {
         <Navbar />
         <Routes>
           <Route path='/' element={token ? <Todo /> : <Navigate to="/login" />} />
-          <Route path='/login' element={token ? <Navigate to="/" /> : <Login />} />
-          <Route path='/signup' element={token ? <Navigate to="/" /> : <Signup />} />
+          <Route path='/login' element={user ? <Navigate to="/" /> : <Login />} />
+          <Route path='/signup' element={user ? <Navigate to="/" /> : <Signup />} />
         </Routes>
       </BrowserRouter>
     </div>
