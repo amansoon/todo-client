@@ -31,6 +31,7 @@ function Navbar() {
                                     <User size={16} strokeWidth={1.5} />
                                 </div>
                             </button>
+                            {user.name}
                         </>
                     ) : (
                         <>
