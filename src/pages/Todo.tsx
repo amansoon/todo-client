@@ -15,13 +15,50 @@ function Todo({ }: Props) {
 
   const dispatch = useDispatch();
   const { todos } = useSelector((state: RootState) => state.todo)
-  const { token } = useSelector((state: RootState) => state.user)
+  const { token, user } = useSelector((state: RootState) => state.user)
 
   useEffect(() => {
-    fetchAllNotes();
+    fetchAllTodoDB();
   }, [])
 
-  const fetchAllNotes = async () => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!text.trim()) {
+      return;
+    }
+    if (updateIndex === null) {
+      const todo = {
+        todoId: (user?._id as string) + Date.now(),
+        text: text.trim(),
+        timestamp: Date.now(),
+      }
+      dispatch(addTodo({ todo }));
+      createTodoDB(todo);
+    }
+    else {
+      const todo = { ...todos[updateIndex], text }
+      dispatch(updateTodo({ updateIndex, todo }))
+      updateTodoDB(todo.todoId, todo.text)
+    }
+
+    setText('')
+    setUpdateIndex(null)
+  }
+
+  const handleDelete = (index: number) => {
+    dispatch(deleteTodo({ todoIndex: index }))
+    setUpdateIndex(null)
+    setText('')
+    deleteNoteDB(todos[index].todoId as string)
+  }
+
+  const handleEdit = (index: number) => {
+    setUpdateIndex(index)
+    setText(todos[index].text)
+  }
+
+  // get from database
+  const fetchAllTodoDB = async () => {
     try {
       const res = await axios.get('http://localhost:8000/api/todo/', {
         headers: {
@@ -39,42 +76,17 @@ function Todo({ }: Props) {
     }
   }
 
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!text.trim()) {
-      return;
-    }
-    const todo = {
-      id: new Date(Date.now()).getTime(),
-      text: text.trim(),
-      timestamp: new Date(Date.now()),
-    }
-
-    if (updateIndex === null) {
-      dispatch(addTodo({ todo }));
-      postNewTodo(todo);
-    }
-    else {
-      dispatch(updateTodo({ updateIndex, todo }))
-    }
-
-    setText('')
-    setUpdateIndex(null)
-  }
-
-  const postNewTodo = async (data: any) => {
-    // create new todo
+  // update in database
+  const updateTodoDB = async (todoId: string, text: string) => {
     try {
-      console.log("post new todo")
-      const res = await axios.post("http://localhost:8000/api/todo/", data, {
+      console.log("update new todo")
+      const res = await axios.put(`http://localhost:8000/api/todo/${todoId}`, { text }, {
         headers: {
           Authorization: "Bearer " + token,
         }
       })
-      console.log(res)
       if (res.status === 200 && res.data.status === 'SUCCESS') {
-        console.log(res.data.data.todo)
-        dispatch(addTodo({ todo: res.data.data.todo }));
+        console.log(res.data.message)
       }
     }
     catch (err) {
@@ -82,8 +94,26 @@ function Todo({ }: Props) {
     }
   }
 
-  const deleteNote = async (id: string) => {
-    // delete note
+  // add into database
+  const createTodoDB = async (data: any) => {
+    try {
+      console.log("post new todo")
+      const res = await axios.post("http://localhost:8000/api/todo/", data, {
+        headers: {
+          Authorization: "Bearer " + token,
+        }
+      })
+      if (res.status === 200 && res.data.status === 'SUCCESS') {
+        console.log(res.data.message)
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+  // delete from database 
+  const deleteNoteDB = async (id: string) => {
     try {
       console.log("delete todo")
       const res = await axios.delete(`http://localhost:8000/api/todo/${id}`, {
@@ -98,30 +128,17 @@ function Todo({ }: Props) {
     }
   }
 
-  const handleDelete = (index: number) => {
-    dispatch(deleteTodo({ todoIndex: index }))
-    setUpdateIndex(null)
-    setText('')
-    // delete from database
-    deleteNote(todos[index]._id as string)
-  }
-
-  const handleEdit = (index: number) => {
-    setUpdateIndex(index)
-    setText(todos[index].text)
-  }
-
   return (
     <div className="flex flex-col mx-auto mt-8  max-w-[600px] w-full  p-4 border rounded-4">
       <div>
         <form className="flex gap-5 mb-4" onSubmit={handleSubmit} >
           <input className="min-w-[150px] grow py-3 px-4 bg-slate-100 rounded-md transition-all focus:bg-white" type="text" placeholder="Write something..." value={text} onChange={(e) => setText(e.target.value)} />
-          <button className="px-4 py-2 bg-black text-white rounded-md"> Submit </button>
+          <button className="px-4 py-2 bg-black text-white rounded-md"> {updateIndex === null ? 'Submit' : 'Update'} </button>
         </form>
         <div className="">
           <ul className="flex flex-col gap-2">
             {todos.map(({ text }, index) => (
-              <li className="group relative flex items-start py-3 px-4 bg-slate-100 rounded-lg overflow-hidden" key={index}>
+              <li className={`group relative flex items-start py-3 px-4 bg-slate-100 rounded-lg overflow-hidden ${updateIndex === index ? "outline outline-2 outline-green-100 bg-slate-50" : ""}`} key={index}>
                 <div> {text} </div>
                 <div className="absolute top-0 right-0 p-1.5 rounded-bl-lg bg-slate-50 border border-white flex items-center opacity-0 group-hover:opacity-100">
                   <button className="p-2 rounded text-slate-500 hover:bg-orange-50 hover:text-oran-800" onClick={() => handleEdit(index)} > <Edit2 size={16} strokeWidth={1.5} /> </button>

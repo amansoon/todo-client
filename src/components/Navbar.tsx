@@ -26,25 +26,24 @@ function Navbar() {
                     {user !== null ? (
                         <>
                             <Link to='/' className='mr-4' > Todos </Link>
-                            <button className='h-[40px] w-[40px] min-w-[40px] rounded-full bg-slate-100 flex justify-center items-center'>
-                                <div>
-                                    <User size={16} strokeWidth={1.5} />
-                                </div>
+                            <button className='h-[40px] w-[40px] min-w-[40px] rounded-full bg-orange-100 text-orange-700 flex justify-center items-center'>
+                                {user.name.charAt(0).toUpperCase()}
                             </button>
-                            {user.name}
                         </>
                     ) : (
                         <>
-                            <button
+                            <Link
+                                to='/login'
                                 className="px-4 py-3 rounded-md bg-black text-white leading-none font-medium"
                             >
                                 Login
-                            </button>
-                            <button
+                            </Link>
+                            <Link
+                                to='/signup'
                                 className="px-4 py-3 rounded-md bg-black text-white leading-none font-medium"
                             >
                                 Signup
-                            </button>
+                            </Link>
                         </>
                     )}
                 </div>
