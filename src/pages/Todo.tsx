@@ -18,7 +18,9 @@ function Todo({ }: Props) {
   const { token, user } = useSelector((state: RootState) => state.user)
 
   useEffect(() => {
-    fetchAllTodoDB();
+    if (todos.length === 0) {
+      fetchAllTodoDB();
+    }
   }, [])
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {

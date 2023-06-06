@@ -6,10 +6,9 @@ type Props = {}
 
 function Profile({}: Props) {
   const {user} = useSelector((state: RootState) => state.user)
-
   return (
     <div>
-       
+       <h1> Profile </h1>
     </div>
   )
 }
