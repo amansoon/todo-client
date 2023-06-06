@@ -3,6 +3,8 @@ import { ArrowRight } from "react-feather"
 import { Link, Router, useNavigate } from "react-router-dom"
 import { validate as validateEmail } from 'email-validator'
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setToken } from "../features/user/userSlice";
 
 
 type Props = {}
@@ -20,6 +22,7 @@ function Signup({ }: Props) {
   const [isDisabled, setDisabled] = useState(true);
   const [isSubmitting, setSubmitting] = useState(false);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
@@ -44,6 +47,8 @@ function Signup({ }: Props) {
       if (res.status === 200 && res.data.status === 'SUCCESS') {
         setDisabled(false);
         setSubmitting(false);
+        const token = res.data.data.token;
+        dispatch(setToken({token}))
         alert("Your account created successfully !")
         setTimeout(() => {
           navigate('/')

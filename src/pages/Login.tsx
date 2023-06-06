@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { ArrowRight } from "react-feather"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { setToken } from '../features/user/userSlice';
 
 type Props = {}
 
@@ -11,7 +13,9 @@ function Login({ }: Props) {
     const [isDisabled, setDisabled] = useState(true);
     const [isSubmitting, setSubmitting] = useState(false);
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
 
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -28,9 +32,14 @@ function Login({ }: Props) {
                 password
             }
             const res = await axios.post("http://localhost:8000/api/user/login", data)
+
+            console.log(res)
+
             if (res.status === 200 && res.data.status === 'SUCCESS') {
                 setDisabled(false);
                 setSubmitting(false);
+                const token = res.data.data.token;
+                dispatch(setToken({token}))
                 alert("Logged In successfully !")
                 setTimeout(() => {
                     navigate('/')
