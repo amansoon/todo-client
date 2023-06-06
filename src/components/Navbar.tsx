@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Menu, X, ChevronDown, ChevronRight, User, BookOpen } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -11,7 +11,7 @@ import { logoutUser } from '../features/user/userSlice'
 function Navbar() {
     const { user } = useSelector((state: RootState) => state.user)
     const [isPopoverOpen, setPopoverOpen] = useState(false)
-
+    
     return (
         <div className="sticky z-[100] top-0 left-0 right-0 w-full border px-4 xl:px-6 bg-white">
             <div className='max-w-[1400px] w-full h-[60px] mx-auto flex items-center'>
@@ -30,6 +30,7 @@ function Navbar() {
                             onClickOutside={() => setPopoverOpen(false)}
                             positions={['bottom', 'right']}
                             content={<UserMenu setPopoverOpen={setPopoverOpen} />}
+
                         >
                             <button
                                 className='h-[40px] w-[40px] min-w-[40px] rounded-full bg-orange-100 text-orange-700 flex justify-center items-center'
@@ -72,19 +73,16 @@ const UserMenu = ({ setPopoverOpen }: UserMenuProps) => {
         dispatch(logoutUser({}))
     }
     return (
-        <div className="relative mr4">
-            {/* arrow */}
-            <span className='inline-block absolute z-0 -top-[5px] left-[calc(50%-10px)] h-[20px] w-[20px] rotate-[45deg] bg-slate-100'> </span>
-            {/* content */}
-            <ul className='relative z-10 w-[150px] flex flex-col p-2 bg-slate-100 rounded-md'>
+        <div className="relative mr-4">
+            <ul className='relative z-10 w-[150px] flex flex-col p-2 bg-slate-50 rounded-md border'>
                 <li>
-                    <Link to={'/'} className='w-full inline-block text-start px-4 py-2.5 leading-none rounded-md bg-slate-100 hover:bg-white' onClick={() => setPopoverOpen(false)}> My Todos  </Link>
+                    <Link to={'/'} className='w-full inline-block text-start px-4 py-2.5 leading-none rounded-md  hover:bg-white' onClick={() => setPopoverOpen(false)}> My Todos  </Link>
                 </li>
                 <li>
-                    <Link to={'/profile'} className='w-full inline-block text-start px-4 py-2.5 leading-none rounded-md bg-slate-100 hover:bg-white' onClick={() => setPopoverOpen(false)}> Profile  </Link>
+                    <Link to={'/profile'} className='w-full inline-block text-start px-4 py-2.5 leading-none rounded-md  hover:bg-white' onClick={() => setPopoverOpen(false)}> Profile  </Link>
                 </li>
                 <li>
-                    <button className='w-full inline-block text-start px-4 py-2.5 leading-none rounded-md bg-slate-100 hover:bg-white' onClick={handleLogout}> Logout  </button>
+                    <button className='w-full inline-block text-start px-4 py-2.5 leading-none rounded-md  hover:bg-white' onClick={handleLogout}> Logout  </button>
                 </li>
             </ul>
         </div>
