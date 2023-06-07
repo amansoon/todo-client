@@ -133,10 +133,10 @@ function Todo({ }: Props) {
   return (
     <div className="flex flex-col mx-auto mt-8  max-w-[600px] w-full">
       <div className="p-4">
-        <div className="bg-white p-2 border-2 mb-5 rounded-lg transition-all focus-within:shadow-lg focus-within:shadow-slate-100">
-          <form className="flex gap-4" onSubmit={handleSubmit}>
+        <div className="bg-white p-2 border-2 mb-5 rounded-full transition-all focus-within:shadow-lg focus-within:shadow-slate-100">
+          <form className="flex" onSubmit={handleSubmit}>
             <input className="min-w-[150px] grow py-3 px-4 bg-transparent rounded-md outline-none transition-all" type="text" placeholder="Write something..." value={text} onChange={(e) => setText(e.target.value)} />
-            <button className="px-4 py-2 bg-black text-white rounded-lg"> {updateIndex === null ? 'Submit' : 'Update'} </button>
+            <button className="px-4 py-2.5 bg-black text-white leading-none rounded-full"> {updateIndex === null ? 'Submit' : 'Update'} </button>
           </form>
         </div>
         <div className="">

@@ -175,7 +175,7 @@ function Profile({ }: Props) {
         <form className="flex flex-col gap-4" onSubmit={handleSubmit} >
           {/* name */}
           <div>
-            <label htmlFor="user-name" className="text-base text-gray-900">
+            <label htmlFor="user-name" className="text-sm text-gray-900">
               Name
             </label>
             <div className="mt-2">
@@ -197,7 +197,7 @@ function Profile({ }: Props) {
           </div>
           {/* email */}
           <div>
-            <label htmlFor="user-email" className="text-base text-gray-900">
+            <label htmlFor="user-email" className="text-sm text-gray-900">
               Email address
             </label>
             <div className="mt-2">
@@ -232,12 +232,12 @@ function Profile({ }: Props) {
         </form>
         {/* footer */}
         <div className="flex justify-between gap-1 mt-6 pt-5 border-t">
-          <button className="flex items-center text-gray-900 hover:text-blue-600" onClick={handleLogout}>
-            <div className="mr-1 mt-[2px]"> <LogOut size={16} strokeWidth={1.5} /> </div>
+          <button className="flex items-center text-sm text-gray-900 hover:text-blue-600" onClick={handleLogout}>
+            <div className="mr-2 mt-[2px]"> <LogOut size={16} strokeWidth={1.5} /> </div>
             Logout
           </button>
-          <button className="flex items-center leading-none text-red-500 hover:text-red-600" onClick={handleDeleteAccount}>
-            <div className="mr-1 mt-[2px]"> <Trash size={16} strokeWidth={1.5} /> </div>
+          <button className="flex items-center text-sm text-red-500 hover:text-red-600" onClick={handleDeleteAccount}>
+            <div className="mr-2 mt-[2px]"> <Trash size={16} strokeWidth={1.5} /> </div>
             Delete account
           </button>
         </div>

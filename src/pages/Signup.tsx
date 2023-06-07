@@ -133,7 +133,7 @@ function Signup({ }: Props) {
         <form className="flex flex-col gap-4" onSubmit={handleSubmit} >
           {/* name */}
           <div>
-            <label htmlFor="user-name" className="text-base text-gray-900">
+            <label htmlFor="user-name" className="text-sm text-gray-900">
               Name
             </label>
             <div className="mt-2">
@@ -154,7 +154,7 @@ function Signup({ }: Props) {
           </div>
           {/* email */}
           <div>
-            <label htmlFor="user-email" className="text-base text-gray-900">
+            <label htmlFor="user-email" className="text-sm text-gray-900">
               Email address
             </label>
             <div className="mt-2">
@@ -175,7 +175,7 @@ function Signup({ }: Props) {
           </div>
           {/* password */}
           <div>
-            <label htmlFor="user-password" className="text-base text-gray-900">
+            <label htmlFor="user-password" className="text-sm text-gray-900">
               Password
             </label>
             <div className="mt-2">
@@ -207,7 +207,7 @@ function Signup({ }: Props) {
         </form>
         {/* footer */}
         <div className="mt-4">
-          <p className="text-slate-500"> Already have an account ? <Link to='/login' className="text-blue-700" > Log In </Link>  </p>
+          <p className="text-sm text-slate-500"> Already have an account ? <Link to='/login' className="text-blue-700" > Log In </Link>  </p>
         </div>
       </div>
     </div>

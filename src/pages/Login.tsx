@@ -77,7 +77,7 @@ function Login({ }: Props) {
                 </div>
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="user-email" className="text-base text-gray-900">
+                        <label htmlFor="user-email" className="text-sm text-gray-900">
                             Email address
                         </label>
                         <div className="mt-2">
@@ -92,7 +92,7 @@ function Login({ }: Props) {
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="user-password" className="text-base text-gray-900">
+                        <label htmlFor="user-password" className="text-sm text-gray-900">
                             Password
                         </label>
                         <div className="mt-2">
@@ -119,7 +119,7 @@ function Login({ }: Props) {
                 </form>
                 {/* footer */}
                 <div className="mt-4">
-                    <p className="text-slate-500"> Don't have an account? <Link to='/signup' className="text-blue-700" > Create account </Link>  </p>
+                    <p className="text-sm text-slate-500"> Don't have an account? <Link to='/signup' className="text-blue-700" > Create account </Link>  </p>
                 </div>
             </div>
         </div>

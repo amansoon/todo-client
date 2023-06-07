@@ -17,12 +17,12 @@ function Navbar() {
             <div className='max-w-[1400px] w-full h-[60px] mx-auto flex items-center'>
                 {/* logo */}
                 <div>
-                    <Link to='/' className='text-xl font-semibold inline-flex items-center leading-none'>
+                    <Link to='/' className='text-xl font-semibold inline-flex items-center'>
                         <span className='inline-block mt-1.5 mr-2'> <BookOpen size={22} /> </span>
-                        TodoBook
+                        <span className='mt-1 mr-2 hidden sm:inline-block'> TodoBook </span>
                     </Link>
                 </div>
-                <div className="flex items-center gap-4 ml-auto">
+                <div className="flex items-center ml-auto">
                     {user !== null ? (
                         <Popover
                             isOpen={isPopoverOpen}
@@ -42,13 +42,13 @@ function Navbar() {
                         <>
                             <Link
                                 to='/login'
-                                className="px-4 py-3 rounded-md bg-black text-white leading-none font-medium"
+                                className="mr-4 md:mr-6"
                             >
                                 Login
                             </Link>
                             <Link
                                 to='/signup'
-                                className="px-4 py-3 rounded-md bg-black text-white leading-none font-medium"
+                                className="px-4 pt-3 pb-3 rounded-full bg-black text-white leading-none"
                             >
                                 Signup
                             </Link>
@@ -72,24 +72,27 @@ const UserMenu = ({ setPopoverOpen }: UserMenuProps) => {
     const handleLogout = () => {
         dispatch(logoutUser({}))
     }
+
+    const menuItemStyle = "w-full inline-flex items-center text-start px-4 py-2.5 text-sm leading-none rounded-lg  hover:bg-white"
+
     return (
         <div className="relative mr-4">
             <ul className='relative z-10 w-[200px] flex flex-col p-2 bg-slate-50 rounded-lg border'>
                 <li>
-                    <Link to={'/'} className='w-full inline-flex items-center text-start px-4 py-2.5 leading-3 rounded-lg  hover:bg-white' onClick={() => setPopoverOpen(false)}>
-                        <div className='mr-2 mt-[2px]'> <List size={16} strokeWidth={1.5} /> </div>
+                    <Link to={'/todo'} className={menuItemStyle} onClick={() => setPopoverOpen(false)}>
+                        <div className='mr-2'> <List size={16} strokeWidth={1.5} /> </div>
                         Todo list
                     </Link>
                 </li>
                 <li>
-                    <Link to={'/profile'} className='w-full inline-flex items-center text-start px-4 py-2.5 leading-3 rounded-lg  hover:bg-white' onClick={() => setPopoverOpen(false)}>
-                        <div className='mr-2 mt-[2px]'> <User size={16} strokeWidth={1.5} /> </div>
+                    <Link to={'/profile'} className={menuItemStyle} onClick={() => setPopoverOpen(false)}>
+                        <div className='mr-2'> <User size={16} strokeWidth={1.5} /> </div>
                         View profile
                     </Link>
                 </li>
                 <li>
-                    <button className='w-full inline-flex items-center text-start px-4 py-2.5 leading-3 rounded-lg hover:bg-white' onClick={handleLogout}>
-                        <div className='mr-2 mt-[2px]'> <LogOut size={16} strokeWidth={1.5} /> </div>
+                    <button className={menuItemStyle} onClick={handleLogout}>
+                        <div className='mr-2'> <LogOut size={16} strokeWidth={1.5} /> </div>
                         Logout
                     </button>
                 </li>
