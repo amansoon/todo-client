@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { ArrowRight } from "react-feather"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios";
 import { useDispatch } from 'react-redux';
@@ -33,9 +32,6 @@ function Login({ }: Props) {
                 password
             }
             const res = await axios.post("http://localhost:8000/api/user/login", data)
-
-            console.log(res)
-
             if (res.status === 200 && res.data.status === 'SUCCESS') {
                 setDisabled(false);
                 setSubmitting(false);
@@ -53,9 +49,8 @@ function Login({ }: Props) {
         catch (err) {
             setDisabled(false);
             setSubmitting(false);
-            console.log(err)
+            // console.log(err)
         }
-
     }
 
     useEffect(() => {

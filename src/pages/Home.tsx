@@ -12,7 +12,7 @@ function Home({ }: Props) {
     const {user} = useSelector((state: RootState) => state.user)
 
     return (
-        <div className='min-h-[calc(100vh-170px)] px-4 sm:px-6 xl:px-6'>
+        <div className='min-h-[calc(100vh-170px)] px-4 sm:px-6'>
             <section className='mt-[60px] lg:mt-[100px] w-full max-w-[1200px] mx-auto flex flex-col lg:flex-row justify-between leading-normal'>
                 <div className='w-full lg:w-[50%]'>
                     <h1 className='text-[2rem] md:text-[3rem] lg:text-[4rem] font-bold mb-2'>

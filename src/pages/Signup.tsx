@@ -41,10 +41,8 @@ function Signup({ }: Props) {
         email: email.trim(),
         password
       }
+
       const res = await axios.post("http://localhost:8000/api/user/signup", data)
-
-      console.log(res)
-
       if (res.status === 200 && res.data.status === 'SUCCESS') {
         setDisabled(false);
         setSubmitting(false);
@@ -62,7 +60,7 @@ function Signup({ }: Props) {
     catch (err) {
       setDisabled(false);
       setSubmitting(false);
-      console.log(err)
+      // console.log(err)
     }
   }
 

@@ -1,5 +1,4 @@
-import { FormEventHandler, useState, useEffect } from "react"
-
+import React, { useState, useEffect } from "react"
 import { RootState } from "../app/store";
 import { useSelector, useDispatch } from "react-redux";
 import { addTodo, deleteTodo, setTodos, updateTodo } from "../features/todo/todoSlice";
@@ -7,7 +6,6 @@ import { Edit2, Trash } from "react-feather";
 import axios from "axios";
 
 import emptyImage from '../images/empty.svg'
-
 
 type Props = {}
 
@@ -61,7 +59,7 @@ function Todo({ }: Props) {
     setText(todos[index].text)
   }
 
-  // get from database
+  // fetch all todos
   const fetchAllTodoDB = async () => {
     try {
       const res = await axios.get('http://localhost:8000/api/todo/', {
@@ -69,71 +67,77 @@ function Todo({ }: Props) {
           Authorization: "Bearer " + token
         }
       });
-      console.log("fetch all todos")
-      console.log(res)
       if (res.status === 200 && res.data.status === 'SUCCESS') {
         dispatch(setTodos({ todos: res.data.data.todos }))
       }
     }
     catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }
 
-  // update in database
+  // update in todo in database
   const updateTodoDB = async (todoId: string, text: string) => {
     try {
-      console.log("update new todo")
       const res = await axios.put(`http://localhost:8000/api/todo/${todoId}`, { text }, {
         headers: {
           Authorization: "Bearer " + token,
         }
       })
       if (res.status === 200 && res.data.status === 'SUCCESS') {
-        console.log(res.data.message)
+        // console.log(res.data.message)
       }
     }
     catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }
 
-  // add into database
+
+  // Add into database
   const createTodoDB = async (data: any) => {
     try {
-      console.log("post new todo")
       const res = await axios.post("http://localhost:8000/api/todo/", data, {
         headers: {
           Authorization: "Bearer " + token,
         }
       })
       if (res.status === 200 && res.data.status === 'SUCCESS') {
-        console.log(res.data.message)
+        // console.log(res.data.message)
+      }
+      else {
+        alert(res.data.message)
       }
     }
     catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }
+
 
   // delete from database 
   const deleteNoteDB = async (id: string) => {
     try {
-      console.log("delete todo")
       const res = await axios.delete(`http://localhost:8000/api/todo/${id}`, {
         headers: {
           Authorization: "Bearer " + token,
         }
       })
-      console.log(res)
+      if (res.status === 200 && res.data.status === 'SUCCESS') {
+        // console.log(res.data.message)
+      }
+      else {
+        alert(res.data.message)
+      }
     }
     catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }
 
+
   return (
-    <div className="flex flex-col mx-auto mt-0 sm:mt-4  max-w-[600px] w-full">
+    <div className="flex flex-col mx-auto mt-0 sm:mt-4 max-w-[600px] w-full">
       <div className="p-4">
         <div className="bg-white p-2 border-2 mb-5 rounded-full transition-all focus-within:shadow-lg focus-within:shadow-slate-100">
           <form className="flex" onSubmit={handleSubmit}>

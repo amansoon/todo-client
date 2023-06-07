@@ -40,7 +40,6 @@ function App({ }: Props) {
   }, [token])
 
   const fetchUser = async () => {
-    console.log("fetching user");
     try {
       const res = await axios.get('http://localhost:8000/api/user/', {
         headers: {
@@ -52,7 +51,7 @@ function App({ }: Props) {
       }
     }
     catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }
 

@@ -1,10 +1,10 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { ArrowRight, Edit2, LogOut, Trash, X } from "react-feather"
-import { Link, Router, useNavigate } from "react-router-dom"
+import { Edit2, LogOut, Trash, X } from "react-feather"
+import { useNavigate } from "react-router-dom"
 import { validate as validateEmail } from 'email-validator'
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser, setToken, setUser } from "../features/user/userSlice";
+import { logoutUser, setUser } from "../features/user/userSlice";
 import { RootState } from "../app/store";
 import { formBtnStyle, inputStyle } from "../utils/groupClasses";
 
@@ -41,7 +41,7 @@ function Profile({ }: Props) {
     if (isDisabled === true) {
       return alert("Please fill all fields correctly.")
     }
-    // prevent multiple submit
+    // avoid multiple submit
     setDisabled(true);
     setSubmitting(true);
 
@@ -72,7 +72,7 @@ function Profile({ }: Props) {
     catch (err) {
       setDisabled(false);
       setSubmitting(false);
-      console.log(err)
+      // console.log(err)
     }
   }
 
@@ -145,7 +145,7 @@ function Profile({ }: Props) {
       }
     }
     catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }
 
@@ -156,13 +156,12 @@ function Profile({ }: Props) {
           Authorization: "Bearer " + token,
         }
       })
-      console.log(res)
       if (res.status === 200 && res.data.status === 'SUCCESS') {
-        console.log("All todos of user deleted successfully.")
+        // console.log("All todos of user deleted successfully.")
       }
     }
     catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }
 
