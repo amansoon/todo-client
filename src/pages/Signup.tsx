@@ -5,6 +5,7 @@ import { validate as validateEmail } from 'email-validator'
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setToken } from "../features/user/userSlice";
+import { formBtnStyle, inputStyle } from "../utils/groupClasses";
 
 
 type Props = {}
@@ -48,7 +49,7 @@ function Signup({ }: Props) {
         setDisabled(false);
         setSubmitting(false);
         const token = res.data.data.token;
-        dispatch(setToken({token}))
+        dispatch(setToken({ token }))
         alert("Your account created successfully !")
         setTimeout(() => {
           navigate('/')
@@ -132,13 +133,13 @@ function Signup({ }: Props) {
         <form className="flex flex-col gap-4" onSubmit={handleSubmit} >
           {/* name */}
           <div>
-            <label htmlFor="" className="text-base text-gray-900">
-              {' '}
-              Name{' '}
+            <label htmlFor="user-name" className="text-base text-gray-900">
+              Name
             </label>
             <div className="mt-2">
               <input
-                className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                id="user-name"
+                className={inputStyle}
                 type="text"
                 placeholder="Name"
                 value={name}
@@ -153,13 +154,13 @@ function Signup({ }: Props) {
           </div>
           {/* email */}
           <div>
-            <label htmlFor="" className="text-base text-gray-900">
-              {' '}
-              Email address{' '}
+            <label htmlFor="user-email" className="text-base text-gray-900">
+              Email address
             </label>
             <div className="mt-2">
               <input
-                className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                id="user-email"
+                className={inputStyle}
                 type="email"
                 placeholder="Email"
                 value={email}
@@ -174,13 +175,13 @@ function Signup({ }: Props) {
           </div>
           {/* password */}
           <div>
-            <label htmlFor="" className="text-base text-gray-900">
-              {' '}
-              Password{' '}
+            <label htmlFor="user-password" className="text-base text-gray-900">
+              Password
             </label>
             <div className="mt-2">
               <input
-                className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                id="user-password"
+                className={inputStyle}
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -195,7 +196,7 @@ function Signup({ }: Props) {
           </div>
           <div>
             <button
-              className="flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:not(:disabled):bg-black disabled:opacity-50"
+              className={formBtnStyle}
               type="submit"
               disabled={isDisabled}
               title={isDisabled ? "Please all fields correctly." : ''}

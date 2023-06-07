@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { Menu, X, ChevronDown, ChevronRight, User, BookOpen } from 'react-feather'
+import { Menu, X, ChevronDown, ChevronRight, User, BookOpen, LogOut, List } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { RootState } from '../app/store'
@@ -11,7 +11,7 @@ import { logoutUser } from '../features/user/userSlice'
 function Navbar() {
     const { user } = useSelector((state: RootState) => state.user)
     const [isPopoverOpen, setPopoverOpen] = useState(false)
-    
+
     return (
         <div className="sticky z-[100] top-0 left-0 right-0 w-full border px-4 xl:px-6 bg-white">
             <div className='max-w-[1400px] w-full h-[60px] mx-auto flex items-center'>
@@ -74,15 +74,24 @@ const UserMenu = ({ setPopoverOpen }: UserMenuProps) => {
     }
     return (
         <div className="relative mr-4">
-            <ul className='relative z-10 w-[150px] flex flex-col p-2 bg-slate-50 rounded-md border'>
+            <ul className='relative z-10 w-[200px] flex flex-col p-2 bg-slate-50 rounded-lg border'>
                 <li>
-                    <Link to={'/'} className='w-full inline-block text-start px-4 py-2.5 leading-none rounded-md  hover:bg-white' onClick={() => setPopoverOpen(false)}> My Todos  </Link>
+                    <Link to={'/'} className='w-full inline-flex items-center text-start px-4 py-2.5 leading-3 rounded-lg  hover:bg-white' onClick={() => setPopoverOpen(false)}>
+                        <div className='mr-2 mt-[2px]'> <List size={16} strokeWidth={1.5} /> </div>
+                        Todo list
+                    </Link>
                 </li>
                 <li>
-                    <Link to={'/profile'} className='w-full inline-block text-start px-4 py-2.5 leading-none rounded-md  hover:bg-white' onClick={() => setPopoverOpen(false)}> Profile  </Link>
+                    <Link to={'/profile'} className='w-full inline-flex items-center text-start px-4 py-2.5 leading-3 rounded-lg  hover:bg-white' onClick={() => setPopoverOpen(false)}>
+                        <div className='mr-2 mt-[2px]'> <User size={16} strokeWidth={1.5} /> </div>
+                        View profile
+                    </Link>
                 </li>
                 <li>
-                    <button className='w-full inline-block text-start px-4 py-2.5 leading-none rounded-md  hover:bg-white' onClick={handleLogout}> Logout  </button>
+                    <button className='w-full inline-flex items-center text-start px-4 py-2.5 leading-3 rounded-lg hover:bg-white' onClick={handleLogout}>
+                        <div className='mr-2 mt-[2px]'> <LogOut size={16} strokeWidth={1.5} /> </div>
+                        Logout
+                    </button>
                 </li>
             </ul>
         </div>
