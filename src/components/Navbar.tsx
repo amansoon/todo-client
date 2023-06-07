@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Menu, X, ChevronDown, ChevronRight, User, BookOpen, LogOut, List } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { RootState } from '../app/store'
 
 import { Popover } from 'react-tiny-popover'
@@ -69,8 +69,10 @@ type UserMenuProps = {
 
 const UserMenu = ({ setPopoverOpen }: UserMenuProps) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const handleLogout = () => {
         dispatch(logoutUser({}))
+        navigate('/')
     }
 
     const menuItemStyle = "w-full inline-flex items-center text-start px-4 py-2.5 text-sm leading-none rounded-lg  hover:bg-white"

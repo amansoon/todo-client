@@ -6,6 +6,8 @@ import { addTodo, deleteTodo, setTodos, updateTodo } from "../features/todo/todo
 import { Edit2, Trash } from "react-feather";
 import axios from "axios";
 
+import emptyImage from '../images/empty.svg'
+
 
 type Props = {}
 
@@ -131,7 +133,7 @@ function Todo({ }: Props) {
   }
 
   return (
-    <div className="flex flex-col mx-auto mt-8  max-w-[600px] w-full">
+    <div className="flex flex-col mx-auto mt-0 sm:mt-4  max-w-[600px] w-full">
       <div className="p-4">
         <div className="bg-white p-2 border-2 mb-5 rounded-full transition-all focus-within:shadow-lg focus-within:shadow-slate-100">
           <form className="flex" onSubmit={handleSubmit}>
@@ -140,17 +142,24 @@ function Todo({ }: Props) {
           </form>
         </div>
         <div className="">
-          <ul className="flex flex-col gap-3">
-            {todos.map(({ text }, index) => (
-              <li className={`group relative flex items-start py-3.5 px-4 bg-slate-100 rounded-lg overflow-hidden outline ${updateIndex === index ? "outline-3 outline-green-200 bg-green-50" : "outline-1 outline-slate-300"}`} key={index}>
-                <div> {text} </div>
-                <div className="absolute top-0 right-0 p-1 rounded-b-lg bg-white/80 border border-white flex items-center opacity-0 group-hover:opacity-100">
-                  <button className="p-2 rounded-lg text-slate-500 border border-transparent hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200" onClick={() => handleEdit(index)} > <Edit2 size={16} strokeWidth={1.5} /> </button>
-                  <button className="p-2 rounded-lg text-slate-500 border border-transparent hover:bg-red-50 hover:text-red-600 hover:border-red-200" onClick={() => handleDelete(index)}  > <Trash size={16} strokeWidth={1.5} /> </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          {todos.length > 0 ? (
+            <ul className="flex flex-col gap-3">
+              {todos.map(({ text }, index) => (
+                <li className={`group relative flex items-start py-3.5 px-4 bg-slate-100 rounded-lg overflow-hidden outline ${updateIndex === index ? "outline-3 outline-green-200 bg-green-50" : "outline-1 outline-slate-300"}`} key={index}>
+                  <div> {text} </div>
+                  <div className="absolute top-0 right-0 p-1 rounded-b-lg bg-white/80 border border-white flex items-center opacity-0 group-hover:opacity-100">
+                    <button className="p-2 rounded-lg text-slate-500 border border-transparent hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200" onClick={() => handleEdit(index)} > <Edit2 size={16} strokeWidth={1.5} /> </button>
+                    <button className="p-2 rounded-lg text-slate-500 border border-transparent hover:bg-red-50 hover:text-red-600 hover:border-red-200" onClick={() => handleDelete(index)}  > <Trash size={16} strokeWidth={1.5} /> </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="py-4 flex flex-col items-center">
+              <div className="text-2xl sm:text-3xl text-gray-300 font-bold mb-6"> Todo list is Empty.  </div>
+              <img src={emptyImage} alt="dodo list is empty" className="w-[150px] sm:w-[200px]" />
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -42,9 +42,7 @@ function Login({ }: Props) {
                 const token = res.data.data.token;
                 dispatch(setToken({ token }))
                 alert("Logged In successfully !")
-                setTimeout(() => {
-                    navigate('/')
-                }, 1000);
+                navigate('/todo')
             }
             else {
                 setDisabled(false);
@@ -70,10 +68,10 @@ function Login({ }: Props) {
     }, [email, password])
 
     return (
-        <div className="min-h-[calc(100vh-60px)] flex justify-center bg-white">
-            <div className="w-full h-full max-w-[450px] p-4 xl:p-6 mt-[70px] border rounded-lg">
-                <div className="mb-5">
-                    <h1 className="text-3xl font-semibold mb-1" > Login </h1>
+        <div className="min-h-[calc(100vh-60px)] flex justify-center p-4 bg-white">
+            <div className="w-full h-full max-w-[450px] px-0 sm:px-6 py-6 sm:mt-[70px] border-0 sm:border rounded-lg">
+                <div className="mb-4">
+                    <h1 className="text-2xl sm:text-3xl font-semibold mb-1" > Login </h1>
                 </div>
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div>

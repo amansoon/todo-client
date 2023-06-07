@@ -18,6 +18,7 @@ import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
 import { deleteAllTodos } from './features/todo/todoSlice';
 import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
 type Props = {}
 
@@ -71,6 +72,7 @@ function App({ }: Props) {
           <Route path='/profile' element={user ? <Profile /> : <Navigate to="/login" />} />
           <Route path='/login' element={user ? <Navigate to="/" /> : <Login />} />
           <Route path='/signup' element={user ? <Navigate to="/" /> : <Signup />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

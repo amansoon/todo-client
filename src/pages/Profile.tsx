@@ -34,6 +34,7 @@ function Profile({ }: Props) {
   }, [])
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -119,12 +120,14 @@ function Profile({ }: Props) {
 
   const handleLogout = () => {
     dispatch(logoutUser({}))
+    navigate('/')
   }
 
   const handleDeleteAccount = () => {
     deleteAccountDB();
     deleteAllTodosDB();
     dispatch(logoutUser({}))
+    navigate('/')
   }
 
   const deleteAccountDB = async () => {
@@ -164,8 +167,8 @@ function Profile({ }: Props) {
   }
 
   return (
-    <div className="min-h-[calc(100vh-60px)] flex justify-center bg-white">
-      <div className="w-full h-full max-w-[450px] p-4 xl:p-6 mt-[70px] border rounded-lg">
+    <div className="min-h-[calc(100vh-60px)] flex justify-center p-4 bg-white">
+      <div className="w-full h-full max-w-[450px] px-0 sm:px-6 py-6 sm:mt-[70px] border-0 sm:border rounded-lg">
         <div className="flex items-center mb-5">
           <h2 className="text-xl font-semibold mb-1 mr-3" > User Info </h2>
           <button className="hover:text-red-500" title="Edit profile" onClick={() => setEditing(!isEditing)} >
