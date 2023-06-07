@@ -44,8 +44,6 @@ function App({ }: Props) {
           Authorization: 'Bearer ' + token,
         }
       })
-      console.log("user = ", res.data);
-      console.log("token = ", token);
       if (res.status === 200 && res.data.status === 'SUCCESS') {
         dispatch(setUser({ user: res.data.data.user }))
       }

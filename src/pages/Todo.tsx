@@ -67,7 +67,7 @@ function Todo({ }: Props) {
           Authorization: "Bearer " + token
         }
       });
-      console.log("fetch all notes")
+      console.log("fetch all todos")
       console.log(res)
       if (res.status === 200 && res.data.status === 'SUCCESS') {
         dispatch(setTodos({ todos: res.data.data.todos }))

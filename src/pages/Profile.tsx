@@ -1,10 +1,10 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { ArrowRight } from "react-feather"
+import { ArrowRight, Edit2, LogOut, Trash, X } from "react-feather"
 import { Link, Router, useNavigate } from "react-router-dom"
 import { validate as validateEmail } from 'email-validator'
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../features/user/userSlice";
+import { setToken, setUser } from "../features/user/userSlice";
 import { RootState } from "../app/store";
 import { formBtnStyle, inputStyle } from "../utils/groupClasses";
 
@@ -18,21 +18,18 @@ function Profile({ }: Props) {
   const [email, setEmail] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
 
-  const [password, setPassword] = useState('');
-  const [passwordMessage, setPasswordMessage] = useState('');
+  const [isEditing, setEditing] = useState(false);
 
-  const [isEditing, setEditing] = useState(true);
-
-  const [isDisabled, setDisabled] = useState(true);
+  const [isDisabled, setDisabled] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user, token } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     if (user) {
       setName(user.name);
       setEmail(user.email);
-      setPassword(user.email);
+      setEditing(false);
     }
   }, [])
 
@@ -51,15 +48,18 @@ function Profile({ }: Props) {
       const data = {
         name: name.trim(),
         email: email.trim(),
-        password
       }
-      const res = await axios.post("http://localhost:8000/api/user/signup", data)
-
+      const res = await axios.put("http://localhost:8000/api/user/", data, {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
       if (res.status === 200 && res.data.status === 'SUCCESS') {
         setDisabled(false);
         setSubmitting(false);
-        const token = res.data.data.token;
-        dispatch(setToken({ token }))
+        setEditing(false);
+        const updatedUser = { ...user, ...data };
+        dispatch(setUser({ user: updatedUser }))
         alert("Your account updated successfully !")
       }
       else {
@@ -102,40 +102,28 @@ function Profile({ }: Props) {
     }
   }
 
-
-  const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
-    setPassword(value)
-    // validate password
-    if (password.length < 6 || password.length > 20) {
-      setPasswordMessage("Password must be of 6 to 20 characters")
-    }
-    else {
-      setPasswordMessage("")
-    }
-  }
-
   useEffect(() => {
     if (
       nameMessage === "" &&
       emailMessage === "" &&
-      passwordMessage === "" &&
       name.trim() !== "" &&
-      email.trim() !== "" &&
-      password.trim() !== ""
+      email.trim() !== ""
     ) {
       setDisabled(false)
     }
     else {
       setDisabled(true)
     }
-  }, [nameMessage, emailMessage, passwordMessage])
+  }, [name, user, nameMessage, emailMessage])
 
   return (
     <div className="min-h-[calc(100vh-60px)] flex justify-center bg-white">
       <div className="w-full h-full max-w-[450px] p-4 xl:p-6 mt-[70px] border rounded-lg">
-        <div className="mb-5">
-          <h1 className="text-3xl font-semibold mb-1" > User Info </h1>
+        <div className="flex items-center mb-5">
+          <h2 className="text-xl font-semibold mb-1 mr-3" > User Info </h2>
+          <button className="hover:text-red-500" title="Edit profile" onClick={() => setEditing(!isEditing)} >
+            {isEditing ? <X size={18} strokeWidth={2} /> : <Edit2 size={18} strokeWidth={2} />}
+          </button>
         </div>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit} >
           {/* name */}
@@ -196,9 +184,15 @@ function Profile({ }: Props) {
           )}
         </form>
         {/* footer */}
-        <div className="mt-4">
-          <h3> Actions </h3>
-          <button className=""> Logout </button>
+        <div className="flex justify-between gap-1 mt-6 pt-5 border-t">
+          <button className="flex items-center text-gray-900">
+            <div className="mr-1 mt-[2px]"> <LogOut size={16} strokeWidth={1.5} /> </div>
+            Logout
+          </button>
+          <button className="flex items-center leading-none text-red-500">
+            <div className="mr-1 mt-[2px]"> <Trash size={16} strokeWidth={1.5} /> </div>
+            Delete account
+          </button>
         </div>
       </div>
     </div>
