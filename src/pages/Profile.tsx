@@ -4,7 +4,7 @@ import { Link, Router, useNavigate } from "react-router-dom"
 import { validate as validateEmail } from 'email-validator'
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken, setUser } from "../features/user/userSlice";
+import { logoutUser, setToken, setUser } from "../features/user/userSlice";
 import { RootState } from "../app/store";
 import { formBtnStyle, inputStyle } from "../utils/groupClasses";
 
@@ -116,6 +116,53 @@ function Profile({ }: Props) {
     }
   }, [name, user, nameMessage, emailMessage])
 
+
+  const handleLogout = () => {
+    dispatch(logoutUser({}))
+  }
+
+  const handleDeleteAccount = () => {
+    deleteAccountDB();
+    deleteAllTodosDB();
+    dispatch(logoutUser({}))
+  }
+
+  const deleteAccountDB = async () => {
+    try {
+      const res = await axios.delete('http://localhost:8000/api/user/', {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
+      if (res.status === 200 && res.data.status === 'SUCCESS') {
+        alert("Your account deleted successfully.");
+      }
+      else {
+        alert("Unable to delete your account.");
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+  const deleteAllTodosDB = async () => {
+    try {
+      const res = await axios.delete("http://localhost:8000/api/todo/", {
+        headers: {
+          Authorization: "Bearer " + token,
+        }
+      })
+      console.log(res)
+      if (res.status === 200 && res.data.status === 'SUCCESS') {
+        console.log("All todos of user deleted successfully.")
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <div className="min-h-[calc(100vh-60px)] flex justify-center bg-white">
       <div className="w-full h-full max-w-[450px] p-4 xl:p-6 mt-[70px] border rounded-lg">
@@ -185,11 +232,11 @@ function Profile({ }: Props) {
         </form>
         {/* footer */}
         <div className="flex justify-between gap-1 mt-6 pt-5 border-t">
-          <button className="flex items-center text-gray-900">
+          <button className="flex items-center text-gray-900 hover:text-blue-600" onClick={handleLogout}>
             <div className="mr-1 mt-[2px]"> <LogOut size={16} strokeWidth={1.5} /> </div>
             Logout
           </button>
-          <button className="flex items-center leading-none text-red-500">
+          <button className="flex items-center leading-none text-red-500 hover:text-red-600" onClick={handleDeleteAccount}>
             <div className="mr-1 mt-[2px]"> <Trash size={16} strokeWidth={1.5} /> </div>
             Delete account
           </button>

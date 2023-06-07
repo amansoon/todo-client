@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface ITodo {
   _id: string,
+  userId: string,
   todoId: string,
   text: string,
   timestamp: Date,
@@ -31,6 +32,9 @@ export const todoSlice = createSlice({
       const { todoIndex } = action.payload;
       state.todos.splice(todoIndex, 1)
     },
+    deleteAllTodos: (state, action) => {
+      state.todos = [];
+    },
     updateTodo: (state, action) => {
       const { updateIndex, todo } = action.payload;
       state.todos.splice(updateIndex, 1, todo)
@@ -39,6 +43,6 @@ export const todoSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setTodos, addTodo, deleteTodo, updateTodo } = todoSlice.actions;
+export const { setTodos, addTodo, deleteTodo, updateTodo, deleteAllTodos } = todoSlice.actions;
 
 export default todoSlice.reducer;

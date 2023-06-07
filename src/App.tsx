@@ -16,6 +16,8 @@ import { setToken, setUser } from './features/user/userSlice';
 import axios from 'axios';
 import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
+import { deleteAllTodos } from './features/todo/todoSlice';
+import Home from './pages/Home';
 
 type Props = {}
 
@@ -53,12 +55,19 @@ function App({ }: Props) {
     }
   }
 
+  useEffect(() => {
+    if (!user) {
+      dispatch(deleteAllTodos({}))
+    }
+  }, [user])
+
   return (
     <div>
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path='/' element={token ? <Todo /> : <Navigate to="/login" />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/todo' element={token ? <Todo /> : <Navigate to="/login" />} />
           <Route path='/profile' element={user ? <Profile /> : <Navigate to="/login" />} />
           <Route path='/login' element={user ? <Navigate to="/" /> : <Login />} />
           <Route path='/signup' element={user ? <Navigate to="/" /> : <Signup />} />

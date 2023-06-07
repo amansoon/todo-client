@@ -122,7 +122,7 @@ function Signup({ }: Props) {
     else {
       setDisabled(true)
     }
-  }, [nameMessage, emailMessage, passwordMessage])
+  }, [name, email, password, nameMessage, emailMessage, passwordMessage])
 
   return (
     <div className="min-h-[calc(100vh-60px)] flex justify-center bg-white">
