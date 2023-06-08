@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser, setUser } from "../features/user/userSlice";
 import { RootState } from "../app/store";
 import { formBtnStyle, inputStyle } from "../utils/groupClasses";
+import { IMessage, MessageKind } from "../types";
+import Message from "../components/Message";
 
 
 type Props = {}
@@ -22,6 +24,8 @@ function Profile({ }: Props) {
 
   const [isDisabled, setDisabled] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
+
+  const [message, setMessage] = useState<IMessage>()
 
   const { user, token } = useSelector((state: RootState) => state.user);
 
@@ -39,7 +43,11 @@ function Profile({ }: Props) {
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isDisabled === true) {
-      return alert("Please fill all fields correctly.")
+      setMessage({
+        text: "Please fill all correctly.",
+        type: MessageKind.ERROR
+      })
+      return;
     }
     // avoid multiple submit
     setDisabled(true);
@@ -61,18 +69,25 @@ function Profile({ }: Props) {
         setEditing(false);
         const updatedUser = { ...user, ...data };
         dispatch(setUser({ user: updatedUser }))
+        setMessage(undefined);
         alert("Your account updated successfully !")
       }
       else {
-        alert(res.data.message)
         setDisabled(false);
         setSubmitting(false);
+        setMessage({
+          text: res.data.message,
+          type: MessageKind.ERROR
+        })
       }
     }
     catch (err) {
       setDisabled(false);
       setSubmitting(false);
-      // console.log(err)
+      setMessage({
+        text: "Unable to update your info. try again after sometime.",
+        type: MessageKind.ERROR
+      })
     }
   }
 
@@ -168,12 +183,16 @@ function Profile({ }: Props) {
   return (
     <div className="min-h-[calc(100vh-60px)] flex justify-center p-4 bg-white">
       <div className="w-full h-full max-w-[450px] px-0 sm:px-6 py-6 sm:mt-[70px] border-0 sm:border rounded-lg">
+        {/* user info title */}
         <div className="flex items-center mb-5">
           <h2 className="text-xl font-semibold mb-1 mr-3" > User Info </h2>
           <button className="hover:text-red-500" title="Edit profile" onClick={() => setEditing(!isEditing)} >
             {isEditing ? <X size={18} strokeWidth={2} /> : <Edit2 size={18} strokeWidth={2} />}
           </button>
         </div>
+        {/* message */}
+        {message && <Message message={message} />}
+        {/* user details (form)  */}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit} >
           {/* name */}
           <div>

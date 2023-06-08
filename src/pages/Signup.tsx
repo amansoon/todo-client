@@ -6,6 +6,9 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setToken } from "../features/user/userSlice";
 import { formBtnStyle, inputStyle } from "../utils/groupClasses";
+import ButtonLoader from "../components/ButtonLoader";
+import { IMessage, MessageKind } from "../types";
+import Message from "../components/Message";
 
 
 type Props = {}
@@ -23,13 +26,19 @@ function Signup({ }: Props) {
   const [isDisabled, setDisabled] = useState(true);
   const [isSubmitting, setSubmitting] = useState(false);
 
+  const [message, setMessage] = useState<IMessage>()
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isDisabled === true) {
-      return alert("Please fill all fields correctly.")
+      setMessage({
+        text: "Please fill all correctly.",
+        type: MessageKind.ERROR
+      })
+      return;
     }
     // prevent multiple submit
     setDisabled(true);
@@ -48,19 +57,25 @@ function Signup({ }: Props) {
         setSubmitting(false);
         const token = res.data.data.token;
         dispatch(setToken({ token }))
-        alert("Your account created successfully !")
+        console.log("Your account created successfully !")
         navigate('/todo')
       }
       else {
-        alert(res.data.message)
         setDisabled(false);
         setSubmitting(false);
+        setMessage({
+          text: res.data.message,
+          type: MessageKind.ERROR
+        })
       }
     }
     catch (err) {
       setDisabled(false);
       setSubmitting(false);
-      // console.log(err)
+      setMessage({
+        text: 'Something went wrong, Unable to create account. Try again after sometime.',
+        type: MessageKind.ERROR
+      })
     }
   }
 
@@ -123,9 +138,12 @@ function Signup({ }: Props) {
   return (
     <div className="min-h-[calc(100vh-60px)] flex justify-center p-4 bg-white">
       <div className="w-full h-full max-w-[450px] px-0 sm:px-6 py-6 sm:mt-[70px] border-0 sm:border rounded-lg">
+        {/* title */}
         <div className="mb-4">
           <h1 className="text-2xl sm:text-3xl font-semibold mb-1" > Create an Account </h1>
         </div>
+        {/* message */}
+        {message && <Message message={message} />}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit} >
           {/* name */}
           <div>
@@ -198,6 +216,7 @@ function Signup({ }: Props) {
               title={isDisabled ? "Please all fields correctly." : ''}
             >
               Create account
+              {isSubmitting && (<ButtonLoader />)}
             </button>
           </div>
         </form>
