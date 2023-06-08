@@ -10,6 +10,8 @@ import ButtonLoader from "../components/ButtonLoader";
 import { IMessage, MessageKind } from "../types";
 import Message from "../components/Message";
 
+import toast from 'react-hot-toast'
+
 
 type Props = {}
 
@@ -57,7 +59,7 @@ function Signup({ }: Props) {
         setSubmitting(false);
         const token = res.data.data.token;
         dispatch(setToken({ token }))
-        console.log("Your account created successfully !")
+        toast.success("Your account created successfully !")
         navigate('/todo')
       }
       else {
@@ -73,7 +75,7 @@ function Signup({ }: Props) {
       setDisabled(false);
       setSubmitting(false);
       setMessage({
-        text: 'Something went wrong, Unable to create account. Try again after sometime.',
+        text: 'Something went wrong, unable to create account. Try again after sometime.',
         type: MessageKind.ERROR
       })
     }

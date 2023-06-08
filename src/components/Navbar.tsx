@@ -7,6 +7,8 @@ import { RootState } from '../app/store'
 import { Popover } from 'react-tiny-popover'
 import { logoutUser } from '../features/user/userSlice'
 
+import toast from 'react-hot-toast'
+
 
 function Navbar() {
     const { user } = useSelector((state: RootState) => state.user)
@@ -72,6 +74,7 @@ const UserMenu = ({ setPopoverOpen }: UserMenuProps) => {
     const navigate = useNavigate();
     const handleLogout = () => {
         dispatch(logoutUser({}))
+        toast.success("Logout successfully.")
         navigate('/')
     }
 

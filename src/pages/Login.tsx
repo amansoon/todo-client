@@ -7,6 +7,9 @@ import { formBtnStyle, inputStyle } from '../utils/groupClasses';
 import { IMessage, MessageKind } from '../types';
 import Message from '../components/Message';
 
+import toast from 'react-hot-toast'
+
+
 type Props = {}
 
 function Login({ }: Props) {
@@ -19,7 +22,6 @@ function Login({ }: Props) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
 
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -45,7 +47,7 @@ function Login({ }: Props) {
                 setSubmitting(false);
                 const token = res.data.data.token;
                 dispatch(setToken({ token }))
-                alert("Logged In successfully !")
+                toast.success("Logged In successfully !")
                 navigate('/todo')
             }
             else {
@@ -60,7 +62,10 @@ function Login({ }: Props) {
         catch (err) {
             setDisabled(false);
             setSubmitting(false);
-            // console.log(err)
+            setMessage({
+                text: "Something went wrong, unable to login. try again after sometime.",
+                type: MessageKind.ERROR
+            })
         }
     }
 

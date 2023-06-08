@@ -6,6 +6,8 @@ import { Edit2, Trash } from "react-feather";
 import axios from "axios";
 import Modal from 'react-modal';
 
+import toast from 'react-hot-toast';
+
 import emptyImage from '../images/empty.svg'
 import { formBtnStyle } from "../utils/groupClasses";
 
@@ -43,6 +45,7 @@ function Todo({ }: Props) {
       dispatch(addTodo({ todo }));
       createTodoDB(todo);
       setText('')
+      toast.success("New todo added successfully.")
     }
     else {
       setUpdateModalOpen(true);
@@ -64,6 +67,7 @@ function Todo({ }: Props) {
       setUpdateIndex(null)
       setDeleteIndex(null)
       setText('')
+      toast.success("Todo deleted successfully.")
     }
     setDeleteModalOpen(false)
   }
@@ -90,6 +94,7 @@ function Todo({ }: Props) {
 
       setUpdateIndex(null)
       setText('')
+      toast.success("Todo updated successfully.")
     }
     setUpdateModalOpen(false)
   }
@@ -99,8 +104,6 @@ function Todo({ }: Props) {
     setText('')
     setUpdateModalOpen(false)
   }
-
-
 
 
 
@@ -121,6 +124,8 @@ function Todo({ }: Props) {
       // console.log(err)
     }
   }
+
+
 
   // update in todo in database
   const updateTodoDB = async (todoId: string, text: string) => {
@@ -152,7 +157,7 @@ function Todo({ }: Props) {
         // console.log(res.data.message)
       }
       else {
-        alert(res.data.message)
+        // alert(res.data.message)
       }
     }
     catch (err) {
@@ -183,7 +188,7 @@ function Todo({ }: Props) {
 
 
   // modal custom style
-  const customStyles = {
+  const customModalStyles = {
     content: {
       top: '50%',
       left: '50%',
@@ -233,7 +238,7 @@ function Todo({ }: Props) {
       {/* delete confirmation modal */}
       <Modal
         isOpen={isDeleteModalOpen}
-        style={customStyles}
+        style={customModalStyles}
         contentLabel="Todo delete confirmation modal"
       >
         <div className="p-4 sm:p-6 border-2 rounded-lg bg-white">
@@ -247,7 +252,7 @@ function Todo({ }: Props) {
       {/* update confirmation modal */}
       <Modal
         isOpen={isUpdateModalOpen}
-        style={customStyles}
+        style={customModalStyles}
         contentLabel="Todo update confirmation modal"
       >
         <div className="p-4 sm:p-6 border-2 rounded-lg bg-white">

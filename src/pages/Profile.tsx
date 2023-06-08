@@ -10,6 +10,7 @@ import { formBtnStyle, inputStyle } from "../utils/groupClasses";
 import { IMessage, MessageKind } from "../types";
 import Message from "../components/Message";
 
+import toast from 'react-hot-toast';
 
 type Props = {}
 
@@ -70,7 +71,7 @@ function Profile({ }: Props) {
         const updatedUser = { ...user, ...data };
         dispatch(setUser({ user: updatedUser }))
         setMessage(undefined);
-        alert("Your account updated successfully !")
+        toast.success("Your account updated successfully!")
       }
       else {
         setDisabled(false);
@@ -135,6 +136,7 @@ function Profile({ }: Props) {
 
   const handleLogout = () => {
     dispatch(logoutUser({}))
+    toast.success("Logout successfully.")
     navigate('/')
   }
 
@@ -153,14 +155,14 @@ function Profile({ }: Props) {
         }
       })
       if (res.status === 200 && res.data.status === 'SUCCESS') {
-        alert("Your account deleted successfully.");
+        toast.success(res.data.message)
       }
       else {
-        alert("Unable to delete your account.");
+        toast.error(res.data.message)
       }
     }
     catch (err) {
-      // console.log(err)
+      toast.error("Unable to delete your account")
     }
   }
 

@@ -20,6 +20,9 @@ import { deleteAllTodos } from './features/todo/todoSlice';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 
+import { Toaster } from 'react-hot-toast';
+
+
 type Props = {}
 
 function App({ }: Props) {
@@ -65,6 +68,7 @@ function App({ }: Props) {
     <div>
       <BrowserRouter>
         <Navbar />
+        <Toaster />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/todo' element={token ? <Todo /> : <Navigate to="/login" />} />
