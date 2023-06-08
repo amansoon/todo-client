@@ -13,8 +13,8 @@ body {
 
 /* ======== button loader======== */
 .loader {
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
   background: transparent;
   border: red 3px solid;
   border-top: transparent;

@@ -8,6 +8,7 @@ import { IMessage, MessageKind } from '../types';
 import Message from '../components/Message';
 
 import toast from 'react-hot-toast'
+import ButtonLoader from '../components/ButtonLoader';
 
 
 type Props = {}
@@ -127,6 +128,7 @@ function Login({ }: Props) {
                             title={isDisabled ? "Please all fields correctly." : ''}
                         >
                             Login
+                            {isSubmitting && (<ButtonLoader />)}
                         </button>
                     </div>
                 </form>

@@ -11,6 +11,7 @@ import { IMessage, MessageKind } from "../types";
 import Message from "../components/Message";
 
 import toast from 'react-hot-toast';
+import ButtonLoader from "../components/ButtonLoader";
 
 type Props = {}
 
@@ -249,6 +250,7 @@ function Profile({ }: Props) {
                 title={isDisabled ? "Please all fields correctly." : ''}
               >
                 Update
+                {isSubmitting && (<ButtonLoader />)}
               </button>
             </div>
           )}
