@@ -68,7 +68,20 @@ function App({ }: Props) {
     <div>
       <BrowserRouter>
         <Navbar />
-        <Toaster />
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          toastOptions={{
+            // Define default options
+            duration: 3000,
+            style: {
+              background: 'black',
+              color: 'white',
+              fontSize: 14,
+              padding: 10,
+            },
+          }}
+        />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/todo' element={token ? <Todo /> : <Navigate to="/login" />} />
