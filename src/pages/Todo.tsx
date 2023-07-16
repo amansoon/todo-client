@@ -210,16 +210,16 @@ function Todo({ }: Props) {
           <div className="bg-white p-2 border-2 mb-5 rounded-full transition-all focus-within:shadow-lg focus-within:shadow-slate-100">
             <form className="flex" onSubmit={handleSubmit}>
               <input className="min-w-[150px] grow py-3 px-4 bg-transparent rounded-md outline-none transition-all" type="text" placeholder="Write something..." value={text} onChange={(e) => setText(e.target.value)} />
-              <button className="px-4 py-2.5 bg-black text-white leading-none rounded-full"> {updateIndex === null ? 'Submit' : 'Update'} </button>
+              <button className="px-4 py-2.5 bg-black text-white leading-none rounded-full"> {updateIndex === null ? 'Add' : 'Update'} </button>
             </form>
           </div>
           <div className="">
             {todos.length > 0 ? (
               <ul className="flex flex-col gap-3">
                 {todos.map(({ text }, index) => (
-                  <li className={`group relative flex items-start py-3.5 px-4 bg-slate-100 rounded-lg overflow-hidden outline ${updateIndex === index ? "outline-3 outline-green-200 bg-green-50" : "outline-1 outline-slate-300"}`} key={index}>
-                    <div> {text} </div>
-                    <div className="absolute top-0 right-0 p-1 rounded-b-lg bg-white/80 border border-white flex items-center opacity-0 group-hover:opacity-100">
+                  <li className={`group relative flex items-center py-3.5 px-4 bg-slate-100 rounded-lg overflow-hidden outline ${updateIndex === index ? "outline-3 outline-green-200 bg-green-50" : "outline-1 outline-slate-300"}`} key={index}>
+                    <div className={'w-full line-clamp-1'}> {text} </div>
+                    <div className="absolute right-0 rounded-lg p-2 bg-white border border-white flex items-center opacity-0 group-hover:opacity-100">
                       <button className="p-2 rounded-lg text-slate-500 border border-transparent hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200" onClick={() => handleEdit(index)} > <Edit2 size={16} strokeWidth={1.5} /> </button>
                       <button className="p-2 rounded-lg text-slate-500 border border-transparent hover:bg-red-50 hover:text-red-600 hover:border-red-200" onClick={() => handleDelete(index)}  > <Trash size={16} strokeWidth={1.5} /> </button>
                     </div>
