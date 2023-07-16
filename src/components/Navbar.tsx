@@ -21,41 +21,8 @@ function Navbar() {
                 <div>
                     <Link to='/' className='text-xl font-semibold inline-flex items-center'>
                         <span className='inline-block mt-1.5 mr-2'> <BookOpen size={22} /> </span>
-                        <span className='mt-1 mr-2 hidden sm:inline-block'> TodoBook </span>
+                        <span className='mt-1 mr-2 hidden sm:inline-block'> Todo </span>
                     </Link>
-                </div>
-                <div className="flex items-center ml-auto">
-                    {user !== null ? (
-                        <Popover
-                            isOpen={isPopoverOpen}
-                            padding={20}
-                            onClickOutside={() => setPopoverOpen(false)}
-                            positions={['bottom', 'right']}
-                            content={<UserMenu setPopoverOpen={setPopoverOpen} />}
-
-                        >
-                            <button
-                                className='h-[40px] w-[40px] min-w-[40px] rounded-full bg-orange-100 text-orange-700 flex justify-center items-center'
-                                onClick={() => setPopoverOpen(!isPopoverOpen)}>
-                                {user.name.charAt(0).toUpperCase()}
-                            </button>
-                        </Popover>
-                    ) : (
-                        <>
-                            <Link
-                                to='/login'
-                                className="mr-4 md:mr-6"
-                            >
-                                Login
-                            </Link>
-                            <Link
-                                to='/signup'
-                                className="px-4 pt-3 pb-3 rounded-full bg-black text-white leading-none"
-                            >
-                                Signup
-                            </Link>
-                        </>
-                    )}
                 </div>
             </div>
         </div>

@@ -213,12 +213,12 @@ function Todo({ }: Props) {
               <button className="px-4 py-2.5 bg-black text-white leading-none rounded-full"> {updateIndex === null ? 'Add' : 'Update'} </button>
             </form>
           </div>
-          <div className="">
+          <div className="p-4 border border-slate-300 rounded-lg">
             {todos.length > 0 ? (
               <ul className="flex flex-col gap-3">
                 {todos.map(({ text }, index) => (
                   <li className={`group relative flex items-center py-3.5 px-4 bg-slate-100 rounded-lg overflow-hidden outline ${updateIndex === index ? "outline-3 outline-green-200 bg-green-50" : "outline-1 outline-slate-300"}`} key={index}>
-                    <div className={'w-full line-clamp-1'}> {text} </div>
+                    <div className={'w-full line-clamp-1 text-center'}> {text} </div>
                     <div className="absolute right-0 rounded-lg p-2 bg-white border border-white flex items-center opacity-0 group-hover:opacity-100">
                       <button className="p-2 rounded-lg text-slate-500 border border-transparent hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200" onClick={() => handleEdit(index)} > <Edit2 size={16} strokeWidth={1.5} /> </button>
                       <button className="p-2 rounded-lg text-slate-500 border border-transparent hover:bg-red-50 hover:text-red-600 hover:border-red-200" onClick={() => handleDelete(index)}  > <Trash size={16} strokeWidth={1.5} /> </button>
